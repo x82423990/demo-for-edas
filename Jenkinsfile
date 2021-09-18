@@ -39,7 +39,7 @@ pipeline {
 //                        customImage.push()
 //                    }
 //                }
-                sh 'docker push ${registryUrl}/demo:${env.BUILD_ID}'
+                sh "docker push ${registryUrl}/demo:${env.BUILD_ID}"
             }
         }
         stage('deploy to EDAS') {
