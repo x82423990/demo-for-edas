@@ -28,15 +28,15 @@ pipeline {
                 sh 'docker build -t test .'
             }
         }
-        stage('push Image') {
-            steps {
-                script {
-                    docker.withRegistry(registry, "ecr:eu-central-1:" + registryCredential) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+//        stage('push Image') {
+//            steps {
+//                script {
+//                    docker.withRegistry(registry, "ecr:eu-central-1:" + registryCredential) {
+//                        dockerImage.push()
+//                    }
+//                }
+//            }
+//        }
         stage('deploy to EDAS') {
             steps {
                 script {
