@@ -2,7 +2,7 @@
 pipeline {
     environment {
         imagename = 'registry.cn-beijing.aliyuncs.com/bzbareg/demo:1.0'
-        registryCredential = 'yenigul-dockerhub'
+        registryCredential = 'docker-registry'
         mvnHome = '/usr/local/apache-maven-3.8.2/bin'
     }
     agent {
@@ -21,22 +21,24 @@ pipeline {
                 sh '${mvnHome}/mvn -B -DskipTests clean package'
             }
         }
-        stage('build image') {
-
-            steps {
-                sh 'echo $hostname'
-                sh 'docker build -t test .'
-            }
-        }
-//        stage('push Image') {
+//        stage('build image') {
+//
 //            steps {
-//                script {
-//                    docker.withRegistry(registry, "ecr:eu-central-1:" + registryCredential) {
-//                        dockerImage.push()
-//                    }
-//                }
+//                sh 'echo $hostname'
+//                sh 'docker build -t test .'
 //            }
 //        }
+        stage('build && push Image') {
+            steps {
+                script {
+                    docker.withRegistry(registry, registryCredential) {
+                        def customImage = docker.build("demo:${env.BUILD_ID}")
+                        /* Push the container to the custom Registry */
+                        customImage.push()
+                    }
+                }
+            }
+        }
         stage('deploy to EDAS') {
             steps {
                 script {
