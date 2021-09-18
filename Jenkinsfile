@@ -24,8 +24,10 @@ pipeline {
         stage('build image') {
 
             steps {
-                sh 'echo $hostname'
+                echo "starting build"
+                echo '${registryUrl}/demo:${env.BUILD_ID}'
                 sh 'docker build -t ${registryUrl}/demo:${env.BUILD_ID} .'
+                echo "end build"
             }
         }
         stage('push Image') {
