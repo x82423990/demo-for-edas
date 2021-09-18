@@ -40,7 +40,7 @@ pipeline {
         stage('deploy to EDAS') {
             steps {
                 script {
-                    edasClient([deployK8sApplication(appId: '4356e997-6b5a-4639-bc5e-647e99142c57', args: '', cpuLimit: '', cpuRequest: '', credentialsString: 'demoEDAS : LTAIDcZDlqTu96Va', edasContainerVersion: '', envs: '', image: true, jdk: '', memoryLimit: '', memoryRequest: '', namespace: 'cn-beijing:default', replicas: '', targetObject: 'registry.cn-beijing.aliyuncs.com/bzbareg/demo:1.0', updateStrategy: '', webContainer: '')])
+                    edasClient([deployK8sApplication(appId: '4356e997-6b5a-4639-bc5e-647e99142c57', args: '', cpuLimit: '', cpuRequest: '', credentialsString: 'demoEDAS : LTAIDcZDlqTu96Va', edasContainerVersion: '', envs: '', image: true, jdk: '', memoryLimit: '', memoryRequest: '', namespace: 'cn-beijing:default', replicas: '1', targetObject: 'registry.cn-beijing.aliyuncs.com/bzbareg/demo:1.0', updateStrategy: '', webContainer: '')])
                 }
             }
         }
