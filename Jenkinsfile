@@ -25,8 +25,8 @@ pipeline {
 
             steps {
                 echo "starting build"
-                echo '${registryUrl}/demo:${env.BUILD_ID}'
-                sh 'docker build -t ${registryUrl}/demo:${env.BUILD_ID} .'
+                echo "${registryUrl}/demo:${env.BUILD_ID}"
+                sh "docker build -t ${registryUrl}/demo:${env.BUILD_ID} ."
                 echo "end build"
             }
         }
