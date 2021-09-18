@@ -1,7 +1,7 @@
 /* groovylint-disable-next-line NglParseError */
 pipeline {
     environment {
-        imagename = 'registry.cn-beijing.aliyuncs.com/bzbareg/demo:1.0'
+        registryUrl = 'registry.cn-beijing.aliyuncs.com/bzbareg'
         registryCredential = 'docker-registry'
         mvnHome = '/usr/local/apache-maven-3.8.2/bin'
     }
@@ -21,22 +21,23 @@ pipeline {
                 sh '${mvnHome}/mvn -B -DskipTests clean package'
             }
         }
-//        stage('build image') {
-//
-//            steps {
-//                sh 'echo $hostname'
-//                sh 'docker build -t test .'
-//            }
-//        }
-        stage('build && push Image') {
+        stage('build image') {
+
             steps {
-                script {
-                    docker.withRegistry(registry, registryCredential) {
-                        def customImage = docker.build("demo:${env.BUILD_ID}")
-                        /* Push the container to the custom Registry */
-                        customImage.push()
-                    }
-                }
+                sh 'echo $hostname'
+                sh 'docker build -t ${registryUrl}/demo:${env.BUILD_ID} .'
+            }
+        }
+        stage('push Image') {
+            steps {
+//                script {
+//                    docker.withRegistry(registry, registryCredential) {
+//                        def customImage = docker.build("demo:${env.BUILD_ID}")
+//                        /* Push the container to the custom Registry */
+//                        customImage.push()
+//                    }
+//                }
+                sh 'docker push ${registryUrl}/demo:${env.BUILD_ID}'
             }
         }
         stage('deploy to EDAS') {
